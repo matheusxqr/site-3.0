@@ -2,13 +2,13 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Feliz dia, meu momozi!</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
     
     <!-- AOS Library for Scroll Animations -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -28,16 +28,8 @@
             --font-body: 'Poppins', sans-serif;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
             background-color: var(--bg-color);
             font-family: var(--font-body);
@@ -47,188 +39,171 @@
 
         /* --- Fundo Animado com Emojis --- */
         #emoji-rain-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; overflow: hidden;
         }
-
-        .emoji {
-            position: absolute;
-            top: -10vh;
-            animation: fall linear forwards;
-            user-select: none;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(110vh) rotate(360deg);
-            }
-        }
+        .emoji { position: absolute; top: -10vh; animation: fall linear forwards; user-select: none; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
         
-        /* --- Seção 1: Tela Inicial (Hero) --- */
+        /* --- Seções Principais --- */
         .hero-section {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
-            position: relative;
+            height: 100vh; display: flex; flex-direction: column; justify-content: center;
+            align-items: center; text-align: center; padding: 0 20px; position: relative;
         }
-
         .hero-section h1 {
-            font-family: var(--font-title);
-            font-size: clamp(2.5rem, 10vw, 4rem);
-            color: var(--hot-pink);
-            margin-bottom: 20px;
-            animation: fadeInDown 1s ease-out forwards;
+            font-family: var(--font-title); font-size: clamp(2.5rem, 10vw, 4rem); color: var(--hot-pink);
+            margin-bottom: 20px; animation: fadeInDown 1s ease-out forwards;
         }
-        
         .hero-section p {
-            font-size: clamp(1rem, 4vw, 1.2rem);
-            font-weight: 300;
-            max-width: 600px;
-            line-height: 1.6;
-            animation: fadeInUp 1s ease-out 0.5s forwards;
-            opacity: 0;
+            font-size: clamp(1rem, 4vw, 1.2rem); font-weight: 300; max-width: 600px;
+            line-height: 1.6; animation: fadeInUp 1s ease-out 0.5s forwards; opacity: 0;
         }
-        
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* --- Seção 2: Conteúdo com Rolagem --- */
         .content-section {
-            padding: 80px 20px;
-            background-color: var(--content-bg);
-            border-radius: 40px 40px 0 0;
-            position: relative;
-            z-index: 1;
-            margin-top: -40px;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
+            padding: 80px 20px; background-color: var(--content-bg); border-radius: 40px 40px 0 0;
+            position: relative; z-index: 1; margin-top: -40px; box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
             transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-        
-        .content-section.is-active {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 0 60px rgba(0, 0, 0, 0.2);
-        }
-
+        .content-section.is-active { transform: translateY(-10px) scale(1.02); box-shadow: 0 0 60px rgba(0, 0, 0, 0.2); }
         .content-section p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px; text-align: justify; }
-        
-        /* COR DO HIGHLIGHT ALTERADA AQUI */
-        .highlight { 
-            background-color: var(--hot-pink);
-            color: var(--white);
-            padding: 3px 8px; 
-            border-radius: 5px; 
-            font-weight: 400; 
-            text-shadow: 1px 1px 1px rgba(0,0,0,0.15);
-        }
+        .highlight { background-color: var(--hot-pink); color: var(--white); padding: 3px 8px; border-radius: 5px; font-weight: 400; text-shadow: 1px 1px 1px rgba(0,0,0,0.15); }
 
-        /* --- Estilo da Foto Polaroid --- */
+        /* --- Polaroids e Lightbox --- */
         .polaroid-container { display: flex; justify-content: center; margin: 40px 0; }
         .polaroid {
-            background: var(--polaroid-bg);
-            padding: 15px 15px 70px 15px;
-            border-radius: 4px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border: 1px solid rgba(0,0,0,0.05);
-            position: relative;
-            width: clamp(250px, 80%, 300px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
+            background: var(--polaroid-bg); padding: 15px 15px 70px 15px; border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05);
+            position: relative; width: clamp(250px, 80%, 300px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;
         }
-
-        .polaroid:hover {
-            transform: scale(1.08) rotate(0deg) !important;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        }
-        
+        .polaroid:hover { transform: scale(1.08) rotate(0deg) !important; box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
         .polaroid.rotate-left { transform: rotate(-5deg); }
         .polaroid.rotate-right { transform: rotate(5deg); }
         .polaroid img { width: 100%; height: auto; display: block; }
         .polaroid figcaption {
             position: absolute; bottom: 15px; left: 15px; right: 15px;
-            text-align: center; font-family: var(--font-title);
-            font-size: 1.2rem; color: var(--text-color);
+            text-align: center; font-family: var(--font-title); font-size: 1.2rem; color: var(--text-color);
         }
-
-        /* --- Estilo do Lightbox (tela cheia) --- */
         #photo-lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; display: flex;
+            justify-content: center; align-items: center; cursor: pointer; opacity: 0;
+            pointer-events: none; transition: opacity 0.4s ease;
         }
-
-        #photo-lightbox.show {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
+        #photo-lightbox.show { opacity: 1; pointer-events: auto; }
         #photo-lightbox .polaroid {
-            width: clamp(300px, 90vw, 500px);
-            cursor: default;
-            transform: scale(0.8);
-            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            width: clamp(300px, 90vw, 500px); cursor: default;
+            transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-        
-        #photo-lightbox.show .polaroid {
-            transform: scale(1);
-        }
+        #photo-lightbox.show .polaroid { transform: scale(1); }
 
-        /* --- Seção 3: Footer Romântico --- */
-        .footer-section {
-            text-align: center;
-            padding: 60px 20px;
-            background-color: var(--bg-color);
-            position: relative;
-            z-index: 1;
-        }
-
+        /* --- Footer e Botão de Jogo --- */
+        .footer-section { text-align: center; padding: 60px 20px; background-color: var(--bg-color); position: relative; z-index: 1; }
         .footer-section h2 { font-family: var(--font-title); font-size: clamp(1.8rem, 8vw, 2.5rem); color: var(--hot-pink); margin-bottom: 30px; }
-        .kiss-button {
-            font-family: var(--font-body); font-size: 1rem; font-weight: 400; padding: 15px 30px;
-            border: 2px solid var(--primary-pink); background-color: transparent; color: var(--hot-pink);
+        .game-start-button {
+            font-family: var(--font-body); font-size: 1.1rem; font-weight: 700; padding: 18px 35px;
+            border: none; background: linear-gradient(45deg, var(--hot-pink), #ff8cbe); color: var(--white);
             border-radius: 50px; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 105, 180, 0.4);
         }
-        .kiss-button:hover {
-            background-color: var(--primary-pink); color: var(--white); transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(255, 182, 193, 0.5);
-        }
-        .kiss-button.vibrating { animation: vibrate 0.3s linear; }
-        @keyframes vibrate {
-            0% { transform: translate(0); } 20% { transform: translate(-2px, 2px); } 40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); } 80% { transform: translate(2px, -2px); } 100% { transform: translate(0); }
-        }
+        .game-start-button:hover { transform: scale(1.1); box-shadow: 0 8px 25px rgba(255, 105, 180, 0.6); }
         .credits { margin-top: 50px; font-size: 0.8rem; font-weight: 300; color: rgba(51, 51, 51, 0.6); }
 
+        /* --- Estilos do Minigame --- */
+        #game-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); z-index: 10000;
+            display: none; /* Inicia escondido */
+            flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.5s ease;
+        }
+        #game-overlay.active { display: flex; opacity: 1; }
+        #game-container { position: relative; width: 100%; max-width: 500px; height: 80%; max-height: 800px; }
+        #game-canvas { display: block; width: 100%; height: 100%; }
+        #game-ui {
+            position: absolute; top: 0; left: 0; width: 100%; padding: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            color: var(--white); text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        #game-title { font-family: var(--font-title); font-size: 2rem; }
+        #score-counter { font-family: var(--font-body); font-size: 1.5rem; font-weight: 700; }
+        
+        /* ESTILOS DO POP-UP APRIMORADOS */
+        .game-message-screen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: none; /* Inicia escondido */
+            justify-content: center; align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .game-message-screen.show {
+            display: flex;
+            opacity: 1;
+        }
+        .game-popup {
+            background: rgba(40, 0, 20, 0.85);
+            padding: 30px 40px;
+            border-radius: 20px;
+            text-align: center;
+            color: var(--white);
+            max-width: 90%;
+            width: 400px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transform: scale(0.7);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .game-message-screen.show .game-popup {
+            transform: scale(1);
+        }
+        .game-popup h3 { font-family: var(--font-title); font-size: clamp(2.5rem, 10vw, 3.5rem); text-shadow: 2px 2px 5px rgba(0,0,0,0.7); }
+        .game-popup p { font-size: 1.2rem; margin: 10px 0 30px; }
+        .restart-button {
+            width: 70px; height: 70px; background-color: var(--white); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; cursor: pointer;
+            border: 5px solid var(--primary-pink); transition: transform 0.2s ease;
+            margin: 0 auto;
+        }
+        .restart-button:hover { transform: scale(1.1); }
+        .restart-button svg { width: 35px; height: 35px; fill: var(--hot-pink); }
     </style>
 </head>
 <body>
     
-    <div id="photo-lightbox">
-        <!-- O Polaroid clicado será clonado aqui via JS -->
+    <div id="photo-lightbox"></div>
+    <div id="emoji-rain-container"></div>
+
+    <!-- ===== Estrutura do Jogo ===== -->
+    <div id="game-overlay">
+        <div id="game-container">
+            <canvas id="game-canvas"></canvas>
+            <div id="game-ui">
+                <h2 id="game-title">Salve o Matheus!</h2>
+                <div id="score-counter">Pontos: 0</div>
+            </div>
+            <div id="win-screen" class="game-message-screen">
+                <div class="game-popup">
+                    <h3>Você conseguiu!</h3>
+                    <p>Obrigado por me salvar, meu amor! Você é a melhor! ❤️</p>
+                    <div class="restart-button">
+                        <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"></path></svg>
+                    </div>
+                </div>
+            </div>
+            <div id="lose-screen" class="game-message-screen">
+                <div class="game-popup">
+                    <h3>Ops!</h3>
+                    <p>Vuxe perdeu burrinha!!! tenta dinovozi!</p>
+                    <div class="restart-button">
+                        <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"></path></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div id="emoji-rain-container"></div>
 
     <section class="hero-section">
         <h1>Feliz dia, meu momozi!</h1>
@@ -269,9 +244,7 @@
     
     <footer class="footer-section">
         <h2 data-aos="zoom-in">Teste Teste...</h2>
-        <button class="kiss-button" id="kissButton" data-aos="fade-up" data-aos-delay="200">
-            Teste Teste...
-        </button>
+        <button class="game-start-button" id="game-start-btn">Prove o seu amor por mim!</button>
         <p class="credits" data-aos="fade-up" data-aos-delay="300">
             Site criado por Matheus De Freitas, com amor para a Laura.
         </p>
@@ -281,7 +254,6 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 800, once: true, offset: 100 });
-
         // --- Lógica da Chuva de Emojis ---
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.getElementById('emoji-rain-container');
@@ -302,48 +274,182 @@
                 setTimeout(() => { emoji.remove(); }, 10000);
             }
         });
-
-        // --- Lógica do Botão de Beijo ---
-        const kissButton = document.getElementById('kissButton');
-        kissButton.addEventListener('click', () => {
-            kissButton.classList.add('vibrating');
-            setTimeout(() => { kissButton.classList.remove('vibrating'); }, 300);
-        });
-
-        // --- Lógica do Efeito de Elevação da Seção ---
-        const contentSection = document.querySelector('.content-section');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    contentSection.classList.add('is-active');
-                } else {
-                    if (entry.boundingClientRect.top > 0) {
-                       contentSection.classList.remove('is-active');
-                    }
-                }
-            });
-        }, { root: null, rootMargin: '0px', threshold: 0.1 });
-        observer.observe(contentSection);
-
-        // --- Lógica do Lightbox das Fotos ---
+        // --- Lógica do Lightbox ---
         const lightbox = document.getElementById('photo-lightbox');
         const polaroids = document.querySelectorAll('.polaroid');
-
         polaroids.forEach(polaroid => {
             polaroid.addEventListener('click', (e) => {
-                e.stopPropagation(); 
-                lightbox.innerHTML = '';
+                e.stopPropagation(); lightbox.innerHTML = '';
                 const clonedPolaroid = polaroid.cloneNode(true);
                 clonedPolaroid.style.transform = '';
                 lightbox.appendChild(clonedPolaroid);
                 lightbox.classList.add('show');
             });
         });
+        lightbox.addEventListener('click', () => { lightbox.classList.remove('show'); });
 
-        lightbox.addEventListener('click', () => {
-            lightbox.classList.remove('show');
+        // --- Lógica do Minigame ---
+        const gameOverlay = document.getElementById('game-overlay');
+        const gameStartBtn = document.getElementById('game-start-btn');
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+        const scoreCounter = document.getElementById('score-counter');
+        const winScreen = document.getElementById('win-screen');
+        const loseScreen = document.getElementById('lose-screen');
+        const restartButtons = document.querySelectorAll('.restart-button');
+        
+        let score, items, player, animationFrameId, isGameOver;
+
+        const playerImg = new Image();
+        // SUBSTITUA O LINK ABAIXO PELA IMAGEM DO SEU BONEQUINHO
+        playerImg.src = 'https://cdn.pixabay.com/photo/2023/03/06/16/59/sprite-7833913_1280.png'; 
+
+        const GOOD_EMOJIS = ['🍔', '🍟', '🍕'];
+        const BAD_EMOJIS = ['🗑️', '💩', '💥', '☠️'];
+        const WIN_SCORE = 10;
+
+        function resizeCanvas() {
+            const container = document.getElementById('game-container');
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+        }
+
+        function setupPlayer() {
+            player = {
+                x: canvas.width / 2 - 30,
+                y: canvas.height - 100,
+                width: 60,
+                height: 80
+            };
+        }
+
+        function updatePlayerPosition(event) {
+            if (!player || isGameOver) return;
+            let clientX = event.clientX || (event.touches && event.touches[0].clientX);
+            if (clientX === undefined) return;
+            const rect = canvas.getBoundingClientRect();
+            player.x = clientX - rect.left - player.width / 2;
+            if (player.x < 0) player.x = 0;
+            if (player.x > canvas.width - player.width) player.x = canvas.width - player.width;
+        }
+
+        function createItem() {
+            const isGood = Math.random() > 0.65;
+            const emojiList = isGood ? GOOD_EMOJIS : BAD_EMOJIS;
+            items.push({
+                x: Math.random() * (canvas.width - 40),
+                y: -40,
+                size: 40,
+                speed: Math.random() * 2 + 2,
+                emoji: emojiList[Math.floor(Math.random() * emojiList.length)],
+                type: isGood ? 'good' : 'bad'
+            });
+        }
+
+        function checkCollision(item) {
+            const playerHitbox = {
+                x: player.x + player.width * 0.15,
+                y: player.y,
+                width: player.width * 0.70,
+                height: player.height
+            };
+            const itemHitbox = {
+                x: item.x + item.size * 0.2,
+                y: item.y + item.size * 0.2,
+                width: item.size * 0.6,
+                height: item.size * 0.6
+            };
+            return playerHitbox.x < itemHitbox.x + itemHitbox.width &&
+                   playerHitbox.x + playerHitbox.width > itemHitbox.x &&
+                   playerHitbox.y < itemHitbox.y + itemHitbox.height &&
+                   playerHitbox.y + playerHitbox.height > itemHitbox.y;
+        }
+
+        function gameLoop() {
+            if (isGameOver) return;
+            animationFrameId = requestAnimationFrame(gameLoop);
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (player) {
+                ctx.drawImage(playerImg, player.x, player.y, player.width, player.height);
+            }
+
+            if (Math.random() < 0.05) {
+                createItem();
+            }
+
+            for (let i = items.length - 1; i >= 0; i--) {
+                const item = items[i];
+                item.y += item.speed;
+
+                ctx.font = `${item.size}px Arial`;
+                ctx.fillText(item.emoji, item.x, item.y);
+
+                if (player && checkCollision(item)) {
+                    if (item.type === 'good') {
+                        score++;
+                        scoreCounter.textContent = `Pontos: ${score}`;
+                    } else {
+                        endGame(false);
+                    }
+                    items.splice(i, 1);
+                }
+
+                if (item.y > canvas.height) {
+                    items.splice(i, 1);
+                }
+            }
+
+            if (score >= WIN_SCORE) {
+                endGame(true);
+            }
+        }
+
+        function startGame() {
+            isGameOver = false;
+            score = 0;
+            items = [];
+            scoreCounter.textContent = `Pontos: 0`;
+            winScreen.classList.remove('show');
+            loseScreen.classList.remove('show');
+            
+            resizeCanvas();
+            setupPlayer();
+            
+            window.addEventListener('mousemove', updatePlayerPosition);
+            window.addEventListener('touchmove', updatePlayerPosition);
+            
+            cancelAnimationFrame(animationFrameId);
+            gameLoop();
+        }
+
+        function endGame(didWin) {
+            isGameOver = true;
+            cancelAnimationFrame(animationFrameId);
+
+            window.removeEventListener('mousemove', updatePlayerPosition);
+            window.removeEventListener('touchmove', updatePlayerPosition);
+
+            if (didWin) {
+                winScreen.classList.add('show');
+            } else {
+                loseScreen.classList.add('show');
+            }
+        }
+
+        gameStartBtn.addEventListener('click', () => {
+            gameOverlay.classList.add('active');
+            startGame();
         });
 
+        restartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                startGame();
+            });
+        });
+
+        window.addEventListener('resize', resizeCanvas);
     </script>
 </body>
 </html>
