@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz dia, meu momozi!</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    
+    <!-- AOS Library for Scroll Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* --- Configurações Globais e Variáveis de Cor --- */
+        :root {
+            --bg-color: #FFF0F5; /* Lavanda claro */
+            --content-bg: #EADDC7; /* Bege */
+            --polaroid-bg: #F9F5F0; /* Branco cremoso para polaroids */
+            --primary-pink: #FFB6C1; /* Rosa claro */
+            --accent-peach: #FFDAB9; /* Pêssego claro */
+            --hot-pink: #FF69B4; /* Pink */
+            --text-color: #333;
+            --white: #FFFFFF;
+            --font-title: 'Pacifico', cursive;
+            --font-body: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: var(--font-body);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* --- Fundo Animado com Emojis --- */
+        #emoji-rain-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .emoji {
+            position: absolute;
+            top: -10vh;
+            animation: fall linear forwards;
+            user-select: none;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+        
+        /* --- Seção 1: Tela Inicial (Hero) --- */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .hero-section h1 {
+            font-family: var(--font-title);
+            font-size: clamp(2.5rem, 10vw, 4rem);
+            color: var(--hot-pink);
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease-out forwards;
+        }
+        
+        .hero-section p {
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            font-weight: 300;
+            max-width: 600px;
+            line-height: 1.6;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Seção 2: Conteúdo com Rolagem --- */
+        .content-section {
+            padding: 80px 20px;
+            background-color: var(--content-bg);
+            border-radius: 40px 40px 0 0;
+            position: relative;
+            z-index: 1;
+            margin-top: -40px;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        .content-section.is-active {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .content-section p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px; text-align: justify; }
+        .highlight { background-color: var(--accent-peach); color: var(--text-color); padding: 2px 8px; border-radius: 5px; font-weight: 400; }
+
+        /* --- Estilo da Foto Polaroid --- */
+        .polaroid-container { display: flex; justify-content: center; margin: 40px 0; }
+        .polaroid {
+            background: var(--polaroid-bg);
+            padding: 15px 15px 70px 15px;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            width: clamp(250px, 80%, 300px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .polaroid:hover {
+            transform: scale(1.08) rotate(0deg) !important;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .polaroid.rotate-left { transform: rotate(-5deg); }
+        .polaroid.rotate-right { transform: rotate(5deg); }
+        .polaroid img { width: 100%; height: auto; display: block; }
+        .polaroid figcaption {
+            position: absolute; bottom: 15px; left: 15px; right: 15px;
+            text-align: center; font-family: var(--font-title);
+            font-size: 1.2rem; color: var(--text-color);
+        }
+
+        /* --- Estilo do Lightbox (tela cheia) --- */
+        #photo-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        #photo-lightbox.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #photo-lightbox .polaroid {
+            width: clamp(300px, 90vw, 500px);
+            cursor: default;
+            transform: scale(0.8);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        #photo-lightbox.show .polaroid {
+            transform: scale(1);
+        }
+
+        /* --- Seção 3: Footer Romântico --- */
+        .footer-section {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: var(--bg-color);
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-section h2 { font-family: var(--font-title); font-size: clamp(1.8rem, 8vw, 2.5rem); color: var(--hot-pink); margin-bottom: 30px; }
+        .kiss-button {
+            font-family: var(--font-body); font-size: 1rem; font-weight: 400; padding: 15px 30px;
+            border: 2px solid var(--primary-pink); background-color: transparent; color: var(--hot-pink);
+            border-radius: 50px; cursor: pointer; transition: all 0.3s ease;
+        }
+        .kiss-button:hover {
+            background-color: var(--primary-pink); color: var(--white); transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 182, 193, 0.5);
+        }
+        .kiss-button.vibrating { animation: vibrate 0.3s linear; }
+        @keyframes vibrate {
+            0% { transform: translate(0); } 20% { transform: translate(-2px, 2px); } 40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); } 80% { transform: translate(2px, -2px); } 100% { transform: translate(0); }
+        }
+        .credits { margin-top: 50px; font-size: 0.8rem; font-weight: 300; color: rgba(51, 51, 51, 0.6); }
+
+    </style>
+</head>
+<body>
+    
+    <div id="photo-lightbox">
+        <!-- O Polaroid clicado será clonado aqui via JS -->
+    </div>
+
+    <div id="emoji-rain-container"></div>
+
+    <section class="hero-section">
+        <h1>Feliz dia, meu momozi!</h1>
+        <p>
+            Hoje é só mais um dia pra te lembrar o quanto você é especial pra mim. 
+            Preparei essa surpresinha pra gente celebrar nosso amor. 
+            Espero que goste, meu aborguinho! ❤️ (INSERIR MAIS TEXTO!!!)
+        </p>
+    </section>
+
+    <section class="content-section">
+        <p data-aos="fade-up">
+            teste
+        </p>
+        <div class="polaroid-container">
+            <div class="polaroid rotate-left" data-aos="zoom-in-up">
+                <img src="https://cdn.pixabay.com/photo/2017/01/31/13/18/house-2023960_1280.png" 
+                     alt="Foto fofa de nós"
+                     onerror="this.onerror=null;this.src='https://placehold.co/400x400/FFC0CB/333?text=Erro+ao+carregar+imagem';">
+                <figcaption>Teste Teste...</figcaption>
+            </div>
+        </div>
+        <p data-aos="fade-up">
+            <span class="highlight">TESTE HIGHLIGHT</span>! teste            
+        </p>
+        <div class="polaroid-container">
+            <div class="polaroid rotate-right" data-aos="zoom-in-up" data-aos-delay="100">
+                <img src="https://cdn.pixabay.com/photo/2017/01/31/13/18/house-2023960_1280.png" 
+                     alt="Outra foto fofa de nós"
+                     onerror="this.onerror=null;this.src='https://placehold.co/400x400/FFB6C1/333?text=Erro+ao+carregar+imagem';">
+                <figcaption>Teste Teste...</figcaption>
+            </div>
+        </div>
+        <p data-aos="fade-up" data-aos-delay="100">
+          teste            
+        </p>
+    </section>
+    
+    <footer class="footer-section">
+        <h2 data-aos="zoom-in">Teste Teste...</h2>
+        <button class="kiss-button" id="kissButton" data-aos="fade-up" data-aos-delay="200">
+            Teste Teste...
+        </button>
+        <p class="credits" data-aos="fade-up" data-aos-delay="300">
+            Site criado por Matheus De Freitas, com amor para a Laura.
+        </p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true, offset: 100 });
+
+        // --- Lógica da Chuva de Emojis ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('emoji-rain-container');
+            const emojis = ['🍔', '❤️'];
+            const emojisPerSecond = 2;
+            setInterval(() => {
+                for (let i = 0; i < emojisPerSecond; i++) createEmoji();
+            }, 1000);
+            function createEmoji() {
+                const emoji = document.createElement('div');
+                emoji.classList.add('emoji');
+                emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.left = Math.random() * 100 + 'vw';
+                emoji.style.fontSize = Math.random() * 1.5 + 1 + 'rem';
+                emoji.style.animationDuration = Math.random() * 5 + 5 + 's';
+                emoji.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(emoji);
+                setTimeout(() => { emoji.remove(); }, 10000);
+            }
+        });
+
+        // --- Lógica do Botão de Beijo ---
+        const kissButton = document.getElementById('kissButton');
+        kissButton.addEventListener('click', () => {
+            kissButton.classList.add('vibrating');
+            setTimeout(() => { kissButton.classList.remove('vibrating'); }, 300);
+        });
+
+        // --- Lógica do Efeito de Elevação da Seção ---
+        const contentSection = document.querySelector('.content-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    contentSection.classList.add('is-active');
+                } else {
+                    if (entry.boundingClientRect.top > 0) {
+                       contentSection.classList.remove('is-active');
+                    }
+                }
+            });
+        }, { root: null, rootMargin: '0px', threshold: 0.1 });
+        observer.observe(contentSection);
+
+        // --- Lógica do Lightbox das Fotos ---
+        const lightbox = document.getElementById('photo-lightbox');
+        const polaroids = document.querySelectorAll('.polaroid');
+
+        polaroids.forEach(polaroid => {
+            polaroid.addEventListener('click', (e) => {
+                e.stopPropagation(); 
+                lightbox.innerHTML = '';
+                const clonedPolaroid = polaroid.cloneNode(true);
+                clonedPolaroid.style.transform = '';
+                lightbox.appendChild(clonedPolaroid);
+                lightbox.classList.add('show');
+            });
+        });
+
+        lightbox.addEventListener('click', () => {
+            lightbox.classList.remove('show');
+        });
+
+    </script>
+</body>
+</html>
