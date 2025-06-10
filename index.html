@@ -8,7 +8,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;700&family=Indie+Flower&display=swap" rel="stylesheet">
     
     <!-- AOS Library for Scroll Animations -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -82,8 +82,8 @@
         .polaroid.rotate-right { transform: rotate(5deg); }
         .polaroid img { width: 100%; height: auto; display: block; }
         .polaroid figcaption {
-            position: absolute; bottom: 15px; left: 15px; right: 15px;
-            text-align: center; font-family: var(--font-title); font-size: 1.2rem; color: var(--text-color);
+            position: absolute; bottom: 41px; left: 15px; right: 15px;
+            text-align: center; font-family: var(--font-title); font-size: 1rem; color: var(--text-color);
         }
         #photo-lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);
@@ -97,6 +97,25 @@
             transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
         #photo-lightbox.show .polaroid { transform: scale(1); }
+
+        /* NOVO: Estilos do Varal de Fotos */
+        .polaroid-varal-container {
+            margin: 60px 0 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .polaroid-small {
+            width: clamp(120px, 25vw, 150px);
+            padding: 10px 10px 50px 10px;
+        }
+        .polaroid-small figcaption {
+            font-size: 1rem;
+            bottom: 12px;
+        }
+
 
         /* --- Footer e Botão de Jogo --- */
         .footer-section { text-align: center; padding: 60px 20px; background-color: var(--bg-color); position: relative; z-index: 1; }
@@ -115,7 +134,7 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px); z-index: 10000;
-            display: none; /* Inicia escondido */
+            display: none;
             flex-direction: column; justify-content: center; align-items: center;
             opacity: 0; transition: opacity 0.5s ease;
         }
@@ -125,46 +144,69 @@
         #game-ui {
             position: absolute; top: 0; left: 0; width: 100%; padding: 20px;
             display: flex; justify-content: space-between; align-items: center;
-            color: var(--white); text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
-        #game-title { font-family: var(--font-title); font-size: 2rem; }
-        #score-counter { font-family: var(--font-body); font-size: 1.5rem; font-weight: 700; }
+        #game-title { font-family: var(--font-title); font-size: 2rem; color: var(--white); text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
         
-        /* ESTILOS DO POP-UP APRIMORADOS */
+        #score-counter {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 8px 18px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-family: var(--font-body);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        #score-counter.pulse {
+            transform: scale(1.15);
+            background-color: var(--hot-pink);
+            animation: pulse-light 0.4s ease-out;
+        }
+        @keyframes pulse-light {
+            0% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 105, 180, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0); }
+        }
+
         .game-message-screen {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: none; /* Inicia escondido */
-            justify-content: center; align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            display: none; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s ease;
         }
-        .game-message-screen.show {
-            display: flex;
-            opacity: 1;
-        }
+        .game-message-screen.show { display: flex; opacity: 1; }
+
         .game-popup {
-            background: rgba(40, 0, 20, 0.85);
+            background: var(--content-bg);
             padding: 30px 40px;
             border-radius: 20px;
             text-align: center;
-            color: var(--white);
+            color: var(--text-color);
             max-width: 90%;
             width: 400px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            border: 1px solid rgba(0,0,0,0.1);
             transform: scale(0.7);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .game-message-screen.show .game-popup {
-            transform: scale(1);
+        .game-message-screen.show .game-popup { transform: scale(1); }
+        .game-popup h3 {
+            font-family: 'Indie Flower', cursive;
+            font-size: clamp(3rem, 10vw, 4rem);
+            color: var(--text-color);
+            text-shadow: none;
         }
-        .game-popup h3 { font-family: var(--font-title); font-size: clamp(2.5rem, 10vw, 3.5rem); text-shadow: 2px 2px 5px rgba(0,0,0,0.7); }
-        .game-popup p { font-size: 1.2rem; margin: 10px 0 30px; }
+        .game-popup p {
+            font-size: 1.2rem;
+            margin: 10px 0 30px;
+            color: var(--text-color);
+        }
         .restart-button {
             width: 70px; height: 70px; background-color: var(--white); border-radius: 50%;
             display: flex; justify-content: center; align-items: center; cursor: pointer;
             border: 5px solid var(--primary-pink); transition: transform 0.2s ease;
-            margin: 0 auto;
+            margin: 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .restart-button:hover { transform: scale(1.1); }
         .restart-button svg { width: 35px; height: 35px; fill: var(--hot-pink); }
@@ -185,8 +227,8 @@
             </div>
             <div id="win-screen" class="game-message-screen">
                 <div class="game-popup">
-                    <h3>Você conseguiu!</h3>
-                    <p>Obrigado por me salvar, meu amor! Você é a melhor! ❤️</p>
+                    <h3>Conseguiuuu!</h3>
+                    <p>Obrigado por me salvar meu amor! Você é a melhor! ❤️</p>
                     <div class="restart-button">
                         <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"></path></svg>
                     </div>
@@ -194,8 +236,8 @@
             </div>
             <div id="lose-screen" class="game-message-screen">
                 <div class="game-popup">
-                    <h3>Ops!</h3>
-                    <p>Vuxe perdeu burrinha!!! tenta dinovozi!</p>
+                    <h3>KKKKK</h3>
+                    <p>Vuxe perdeu! tenta denovo!</p>
                     <div class="restart-button">
                         <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"></path></svg>
                     </div>
@@ -209,41 +251,58 @@
         <h1>Feliz dia, meu momozi!</h1>
         <p>
             Hoje é só mais um dia pra te lembrar o quanto você é especial pra mim. 
-            Preparei essa surpresinha pra gente celebrar nosso amor. 
-            Espero que goste, meu aborguinho! ❤️ (INSERIR MAIS TEXTO!!!)
+            Por isso eu fiz essa surpresinha pra gente celebrar nosso amor. 
+            Espero que goste, meu aborguinho! ❤️
         </p>
     </section>
 
     <section class="content-section">
         <p data-aos="fade-up">
-            teste
+            Meu amor, eu te amo muito e por isso sempre busco demonstrar isso de formas diferentes, e mesmo que as vezes você ache que eu não demonstro do mesmo jeito que você, no fundo eu te amo muito e esse é meu jeito de te amar.
         </p>
         <div class="polaroid-container">
             <div class="polaroid rotate-left" data-aos="zoom-in-up">
-                <img src="https://cdn.pixabay.com/photo/2017/01/31/13/18/house-2023960_1280.png" 
+                <img src="https://i.postimg.cc/Wp9xN8KX/01.jpg" 
                      alt="Foto fofa de nós"
                      onerror="this.onerror=null;this.src='https://placehold.co/400x400/FFC0CB/333?text=Erro+ao+carregar+imagem';">
-                <figcaption>Teste Teste...</figcaption>
+                <figcaption>Raro registro de eu sorrindo em foto</figcaption>
             </div>
         </div>
         <p data-aos="fade-up">
-            <span class="highlight">TESTE HIGHLIGHT</span>! teste            
+            Mesmo que a gente se desentenda as vezes, quero que tu nunca esqueça que eu te valorizo demais! E que eu nunca senti o que sinto por ti com ninguém, nem nunca vivi isso com ninguém, <span class="highlight">você é muito especial pra mim meu amor.</span>            
         </p>
         <div class="polaroid-container">
             <div class="polaroid rotate-right" data-aos="zoom-in-up" data-aos-delay="100">
-                <img src="https://cdn.pixabay.com/photo/2017/01/31/13/18/house-2023960_1280.png" 
+                <img src="https://i.postimg.cc/3wCbPFmj/02.jpg" 
                      alt="Outra foto fofa de nós"
                      onerror="this.onerror=null;this.src='https://placehold.co/400x400/FFB6C1/333?text=Erro+ao+carregar+imagem';">
-                <figcaption>Teste Teste...</figcaption>
+                <figcaption>Nós muito fofos</figcaption>
             </div>
         </div>
         <p data-aos="fade-up" data-aos-delay="100">
-          teste            
+          Por fim, só queria te dizer muito obrigado por ser você, por me aceitar mesmo com todos os meus defeitos, por acreditar em mim e me fazer melhorar, por me acolher sempre e por sempre fazer de tudo pra me ver feliz. Eu te agradeço muito por tudo que tu faz por mim e isso faz eu te amar ainda mais!           
         </p>
+
+        <!-- NOVO: Varal de Fotos Polaroid -->
+        <div class="polaroid-varal-container" data-aos="fade-up">
+            <div class="polaroid polaroid-small rotate-left">
+                <img src="https://i.postimg.cc/T3bsc6P4/04.jpg" alt="Foto fofa de nós" onerror="this.onerror=null;this.src='https://placehold.co/400x400/FFC0CB/333?text=Erro+ao+carregar+imagem';">
+                <figcaption>❤️‍🩹</figcaption>
+            </div>
+            <div class="polaroid polaroid-small rotate-right">
+                <img src="https://i.postimg.cc/5N6T6vW1/03.jpg" alt="Foto fofa de nós" onerror="this.onerror=null;this.src='https://placehold.co/400x400/FFC0CB/333?text=Erro+ao+carregar+imagem';">
+                <figcaption>Mídia</figcaption>
+            </div>
+            <div class="polaroid polaroid-small rotate-left">
+                 <img src="https://i.postimg.cc/yYt59d7R/05.jpg" alt="Foto fofa de nós" onerror="this.onerror=null;this.src='https://placehold.co/400x400/FFC0CB/333?text=Erro+ao+carregar+imagem';">
+                <figcaption> 💗</figcaption>
+            </div>
+        </div>
+
     </section>
     
     <footer class="footer-section">
-        <h2 data-aos="zoom-in">Teste Teste...</h2>
+        <h2 data-aos="zoom-in">te amo oncinha 🐆❤️</h2>
         <button class="game-start-button" id="game-start-btn">Prove o seu amor por mim!</button>
         <p class="credits" data-aos="fade-up" data-aos-delay="300">
             Site criado por Matheus De Freitas, com amor para a Laura.
@@ -274,6 +333,21 @@
                 setTimeout(() => { emoji.remove(); }, 10000);
             }
         });
+        // --- Lógica do Efeito de Elevação da Seção ---
+        const contentSection = document.querySelector('.content-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    contentSection.classList.add('is-active');
+                } else {
+                    if (entry.boundingClientRect.top > 0) {
+                       contentSection.classList.remove('is-active');
+                    }
+                }
+            });
+        }, { root: null, rootMargin: '0px', threshold: 0.1 });
+        observer.observe(contentSection);
+        
         // --- Lógica do Lightbox ---
         const lightbox = document.getElementById('photo-lightbox');
         const polaroids = document.querySelectorAll('.polaroid');
@@ -301,8 +375,7 @@
         let score, items, player, animationFrameId, isGameOver;
 
         const playerImg = new Image();
-        // SUBSTITUA O LINK ABAIXO PELA IMAGEM DO SEU BONEQUINHO
-        playerImg.src = 'https://cdn.pixabay.com/photo/2023/03/06/16/59/sprite-7833913_1280.png'; 
+        playerImg.src = 'https://i.postimg.cc/cHx5ZtBp/minigame.jpg'; 
 
         const GOOD_EMOJIS = ['🍔', '🍟', '🍕'];
         const BAD_EMOJIS = ['🗑️', '💩', '💥', '☠️'];
@@ -316,10 +389,10 @@
 
         function setupPlayer() {
             player = {
-                x: canvas.width / 2 - 30,
-                y: canvas.height - 100,
-                width: 60,
-                height: 80
+                x: canvas.width / 2 - 25,
+                y: canvas.height - 90,
+                width: 50,
+                height: 66
             };
         }
 
@@ -337,10 +410,10 @@
             const isGood = Math.random() > 0.65;
             const emojiList = isGood ? GOOD_EMOJIS : BAD_EMOJIS;
             items.push({
-                x: Math.random() * (canvas.width - 40),
-                y: -40,
-                size: 40,
-                speed: Math.random() * 2 + 2,
+                x: Math.random() * (canvas.width - 35),
+                y: -35,
+                size: 35,
+                speed: Math.random() * 1.5 + 1.5,
                 emoji: emojiList[Math.floor(Math.random() * emojiList.length)],
                 type: isGood ? 'good' : 'bad'
             });
@@ -375,7 +448,7 @@
                 ctx.drawImage(playerImg, player.x, player.y, player.width, player.height);
             }
 
-            if (Math.random() < 0.05) {
+            if (Math.random() < 0.025) { 
                 createItem();
             }
 
@@ -390,6 +463,8 @@
                     if (item.type === 'good') {
                         score++;
                         scoreCounter.textContent = `Pontos: ${score}`;
+                        scoreCounter.classList.add('pulse');
+                        setTimeout(() => scoreCounter.classList.remove('pulse'), 400);
                     } else {
                         endGame(false);
                     }
